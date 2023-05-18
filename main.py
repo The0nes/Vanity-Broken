@@ -6,6 +6,8 @@ screen = pygame.display.set_mode((800, 800))  # creates game screen
 screen.fill((0,0,0))
 clock = pygame.time.Clock() #set up clock
 gameover = False #variable to run our game loop
+player = pygame.image.load('Purple fly.png')
+
 
 #CONSTANTS
 LEFT=0
@@ -30,8 +32,9 @@ class pipeb:
         if self.xpos < -20: #reset to right side if you move off the left
             self.xpos = random.randrange(800, 1000) #reset to random location off screen
            
-    def collision(self, playerX, playerY):
-        pass #replace this with either circular or bounding box collision
+    def collision(self, playerx, playery, width, height):
+        if playerx + width > ex and playerx < ex  + weight and playery + height > ey and playery < ey + height:
+            
 
 
 
@@ -50,10 +53,11 @@ class piped:
     def move(self):
         self.xpos -= 3
         if self.xpos < -20: #reset to right side if you move off the left
-            self.xpos = random.randrange(0, 0) #reset to random location off screen
+            self.ypos = random.randrange(-600, -400)
+            self.xpos = random.randrange(800, 900) #reset to random location off screen
            
-    def collision(self, playerX, playerY):
-        pass #replace this with either circular or bounding box collision
+    def collision(self, playerx, playery):
+        if playerx + width > ex and playerx < ex  + weight and playery + height > ey and playery < ey + height #bounding box collision
 
 
 #instantiate a pipe
@@ -67,6 +71,10 @@ xpos = 500 #xpos of player
 ypos = 200 #ypos of player
 vx = 0 #x velocity of player
 vy = 0 #y velocity of player
+framewidth = 24
+frameheight = 17
+rownum = 0
+framenum = 0
 keys = [False, False, False, False] #this list holds whether each key has been pressed
 isOnGround = False #this variable stops gravity from pulling you down more when on a platform
 
@@ -137,6 +145,7 @@ while not gameover: #GAME LOOP##################################################
     screen.fill((0,0,0)) #wipe screen so it doesn't smear
  
     pygame.draw.rect(screen, (100, 200, 100), (xpos, ypos, 20, 40)) #draw player
+    screen.blit(player,(xpos, ypos), (framewidth * framenum, rownum * frameheight, framewidth, frameheight))
 
     #draw pipes
     p1.draw()
