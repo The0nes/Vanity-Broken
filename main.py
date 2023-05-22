@@ -16,6 +16,7 @@ UP = 2
 DOWN = 3
 
 class pipeb:
+    
     def __init__(self, x, y):
         self.xpos = x
         self.ypos = y
@@ -32,32 +33,38 @@ class pipeb:
         if self.xpos < -20: #reset to right side if you move off the left
             self.xpos = random.randrange(800, 1000) #reset to random location off screen
            
-    def collision(self, playerx, playery, width, height):
-        if playerx + width > ex and playerx < ex  + weight and playery + height > ey and playery < ey + height:
+    def collision(self, xpos, ypos, width, height):
+        if xpos + width > ex and xpos < ex  + width and ypos + height > ey and ypos < ey + height:
+            return true
+        else:
+            return false
             
 
 
 
 class piped:
-    def __init__(self, x, y):
+     def __init__(self, x, y):
         self.xpos = x
         self.ypos = y
         self.red = random.randrange(0, 200)
         self.blue = random.randrange(100, 200)
         self.green = random.randrange(0,100)
        
-    def draw(self):
+     def draw(self):
         pygame.draw.rect(screen, (self.red, self.green, self.blue), (self.xpos, self.ypos, 20, 800))
         #if you want this to be a picture use the blit function instead
        
-    def move(self):
+     def move(self):
         self.xpos -= 3
         if self.xpos < -20: #reset to right side if you move off the left
             self.ypos = random.randrange(-600, -400)
             self.xpos = random.randrange(800, 900) #reset to random location off screen
            
-    def collision(self, playerx, playery):
-        if playerx + width > ex and playerx < ex  + weight and playery + height > ey and playery < ey + height #bounding box collision
+     def collision(self, xpos, ypos, width, height):
+        if xpos + width > ex and xpos < ex  + width and ypos + height > ey and ypos < ey + height: #bounding box collision
+            return true
+        else:
+            return false
 
 
 #instantiate a pipe
@@ -140,6 +147,11 @@ while not gameover: #GAME LOOP##################################################
     p2.move()
     p3.move()
     p4.move()
+    
+    
+    if collision(xpos, ypos, 20, 20) == True:
+        print("DED")
+    
     # RENDER Section--------------------------------------------------------------------------------
            
     screen.fill((0,0,0)) #wipe screen so it doesn't smear
